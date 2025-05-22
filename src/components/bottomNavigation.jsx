@@ -5,7 +5,7 @@ const navItems = [
     { path: "/", label: "Trang chủ", icon: "zi-home" },
     { path: "/SearchPage", label: "Tìm kiếm", icon: "zi-search" },
     { path: "/Booking", label: "Đặt lịch", icon: "zi-calendar" },
-    { path: "/Noticate", label: "Thông báo", icon: "zi-notification" },
+    { path: "/Noticate", label: "Thông báo", icon: "zi-notif" },
     { path: "/Setting", label: "Cá nhân", icon: "zi-user" },
 ];
 
@@ -29,7 +29,7 @@ export default function BottomNav() {
     if (isHidden) return null;
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-md flex justify-around py-2 z-50 flex-none h-[60px]">
+        <div className="fixed bottom-0 left-0 right-0 bg-white flex justify-around items-center z-50 rounded-t-3xl h-[60px]">
             {navItems.map((item) => {
                 const isActive = location.pathname === item.path;
                 return (

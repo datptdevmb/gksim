@@ -1,20 +1,31 @@
+import { Icon, Input, Select } from "zmp-ui";
+const { Search } = Input;
+
 export default function SearchFilterBar({ onSearch, onFilterChange }) {
     return (
         <div className="px-4 py-2 bg-white flex flex-col gap-2">
-            <input
-                type="text"
-                placeholder="Tìm kiếm"
-                className="border px-3 py-2 rounded-md text-sm"
-                onChange={(e) => onSearch(e.target.value)}
+            <Search
+            placeholder="Tìm kiếm"
+            onChange={(e) => onSearch(e.target.value)}
+            icon={<Icon icon="zi-search" style={{ color: "#0069F3" }} />}
             />
-            <select
-                className="border px-3 py-2 rounded-md text-sm"
+            <Select
+                defaultValue="1"
                 onChange={(e) => onFilterChange(e.target.value)}
-            >
-                <option value="all">Tất cả</option>
-                <option value="mentor">Mentor</option>
-                <option value="mentee">Mentee</option>
-            </select>
+                >
+                <Option
+                    title="Tất cả"
+                    value="1"
+                />
+                <Option
+                    title="Mentor"
+                    value="2"
+                />
+                <Option
+                    title="Mentee"
+                    value="3"
+                />
+            </Select>
         </div>
     );
 }

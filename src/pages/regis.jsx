@@ -1,5 +1,5 @@
 import { memo } from "react";
-import "../css/regis.css"; // Import your CSS file here
+import "../css/regis.css";
 
 function RegisPage() {
 
@@ -7,7 +7,7 @@ function RegisPage() {
 
     return (
         <div>
-            <p> Bạn muốn trở thành mentee hay mentor?</p>
+            <p className="text-uppercase text-2xl font-bold"> Bạn muốn trở thành mentee hay mentor?</p>
             <div className="options">
                 <div className="option mentee">
                     <img src="/path/to/mentee-image.png" alt="Mentee" />

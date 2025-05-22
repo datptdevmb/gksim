@@ -3,7 +3,7 @@ import ButtonApp from "../Button/ButtonApp";
 function CallToActionCard({ logo, title, buttonText, onClick }) {
     return (
         <div className="bg-white rounded-lg p-3 mb-4 flex items-center justify-between shadow">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-none basis-[60%]">
                 <img src={logo} alt="logo" className="h-10 w-10 rounded" />
                 <div className="text-sm font-medium">{title}</div>
             </div>

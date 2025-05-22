@@ -10,7 +10,8 @@ import { base, variantClasses } from "../Container/container.config";
 function Container({
     bg = "primary",
     children,
-    className = ''
+    className = '',
+    style = {}
 }) {
 
     const classes = classNames(
@@ -21,6 +22,7 @@ function Container({
     return (
         <div
             className={`${classes} ${className}`}
+            style={style}
         >
             {children}
         </div>

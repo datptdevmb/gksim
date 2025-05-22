@@ -1,4 +1,3 @@
-// useAppNavigation.js
 import { useNavigate } from "zmp-ui";
 import { ROUTES } from "@/assets/constant/routes";
 
@@ -16,6 +15,9 @@ export default function useAppNavigation() {
         goToConfirm: () => navigate(ROUTES.CONFIRM),
         goToDetailBooking: () => navigate(ROUTES.BOOKING_DETAIL),
         goToEditProfile: () => navigate(ROUTES.EDIT_PROFILE),
-        goBack: () => navigate(-1),
+        goBack: () => {
+            if (window.location.pathname === ROUTES.HOME) return;
+            navigate(-1);
+        },
     };
 }

@@ -1,4 +1,4 @@
-import AppHeader from "@/components/Header/Header";
+import { Tabs, Input } from "zmp-ui";
 import NewsCard from "@/components/News/NewsCard";
 import useAppNavigation from "@/hooks/useNavigation";
 import { useState } from "react";
@@ -11,51 +11,52 @@ export default function NewsPage() {
         { id: "all", label: "Tất cả" },
         { id: "cat1", label: "Danh mục 1" },
         { id: "cat2", label: "Danh mục 2" },
+        { id: "cat3", label: "Danh mục 3" },
+        { id: "cat4", label: "Danh mục 4" },
     ];
 
     const [activeCategory, setActiveCategory] = useState("all");
 
     return (
-        <div className="flex flex-col flex-1"> 
-            <div className="flex-1 overflow-y-auto bg-white">
-                {/* Tabs danh mục */}
-                <div className="flex overflow-x-auto px-4 gap-4 py-2 bg-white border-b">
-                    {categories.map((cat) => (
-                        <button
-                            key={cat.id}
-                            onClick={() => setActiveCategory(cat.id)}
-                            className={`text-sm whitespace-nowrap ${activeCategory === cat.id
-                                ? "text-blue-600 font-semibold"
-                                : "text-gray-500"
-                                }`}
-                        >
-                            {cat.label}
-                        </button>
-                    ))}
-                </div>
-
-                {/* Search bar */}
-                <div className="px-4 py-2 bg-white">
-                    <input
-                        type="text"
-                        placeholder="Tìm kiếm nhanh"
-                        className="w-full border rounded px-3 py-2 text-sm"
+        <div className="flex flex-col flex-1 bg-[#f5f6fa] min-h-screen">
+            <Tabs
+                value={activeCategory}
+                onChange={setActiveCategory}
+                scrollable
+                className="bg-white px-2 pt-2"
+            >
+                {categories.map((cat) => (
+                    <Tabs.Tab
+                        key={cat.id}
+                        value={cat.id}
+                        label={cat.label}
+                        className="!text-base"
                     />
-                </div>
-
-                {/* Danh sách bài viết */}
-                <div className="px-4 space-y-4 pb-4">
-                    {[...Array(15)].map((_, idx) => (
+                ))}
+            </Tabs>
+            <div className="px-4 py-2 bg-white sticky top-0 z-10">
+                <Input
+                    placeholder="Tìm kiếm nhanh"
+                    clearable
+                    className="rounded-lg"
+                />
+            </div>
+            <div className="px-2 space-y-3 pb-4">
+                {[...Array(10)].map((_, idx) => (
+                    <div
+                        key={idx}
+                        className="bg-white rounded-xl shadow-md cursor-pointer mb-3 mx-2 transition hover:shadow-lg"
+                        onClick={goToNewsDetailPage}
+                        style={{ minHeight: 80 }}
+                    >
                         <NewsCard
-                            key={idx}
                             image={images.post1}
                             date="05/03/2024"
                             title="Hãng Công Nghệ X Ra Mắt Điện Thoại Mới Với Công Nghệ AI Tích Hợp"
-                            summary="Hãng công nghệ X vừa chính thức giới thiệu mẫu điện thoại mới nhất..."
-                            onClick={() => goToNewsDetailPage()}
+                            summary="Hãng công nghệ X vừa chính thức giới thiệu mẫu điện thoại mới nhất với chip xử lý AI mạnh mẽ, giúp tối ưu hóa trải nghiệm người dùng."
                         />
-                    ))}
-                </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

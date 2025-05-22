@@ -15,6 +15,7 @@ function ButtonApp({
     icon = null,
     onClick = () => { },
     type = "button",
+    className= "",
     children,
 }) {
     const isDisabled = disabled || loading;
@@ -28,7 +29,8 @@ function ButtonApp({
             "rounded-full": rounded,
             "rounded-md": !rounded && variant !== "icon",
             "opacity-50 cursor-not-allowed": isDisabled,
-        }
+        },
+        className
     );
 
     return (

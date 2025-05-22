@@ -1,4 +1,3 @@
-// routes.constant.js
 export const ROUTES = {
     REGISTER: "/register",
     DETAIL: "/detail",
@@ -10,4 +9,5 @@ export const ROUTES = {
     CONFIRM: "/booking-confirm",
     BOOKING_DETAIL: "/booking-detail",
     EDIT_PROFILE: "/editprofile",
+    HOME: "/",
 };

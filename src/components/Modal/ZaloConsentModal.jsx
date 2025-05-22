@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Header from "@/components/Header/Header";
-import FormInput from "@/components/Form/FormInput";
+
+import FormInput from "@/components/Form/BaseInput";
 import SectionTitle from "@/components/Form/SectionTitle";
 import FormFooterButton from "@/components/Footer/FormFooterButton";
 import ButtonApp from "../Button/ButtonApp";

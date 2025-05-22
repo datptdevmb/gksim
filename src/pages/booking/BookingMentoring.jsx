@@ -1,8 +1,8 @@
 // BookingMentoring.jsx
 import StepperItem from "@/components/Form/StepperItem";
-import FormInput from "@/components/Form/FormInput";
+import FormInput from "@/components/Form/BaseInput";
 import ButtonApp from "@/components/Button/ButtonApp";
-import Header from "@/components/Header/Header";
+import Header from "@/components/MainHeader/MainHeader";
 import useAppNavigation from "@/hooks/useNavigation";
 import { useState } from "react";
 import BookingCard from "@/components/Card/BookingCard";
@@ -69,7 +69,7 @@ export default function BookingMentoring() {
                 </div>
             ) : (
                 <div className="px-4 pt-4 space-y-4">
-                   
+
                     <div className="space-y-2">
                         <div className="flex gap-2">
                             <input type="date" className="w-full border border-gray-300 rounded px-2 py-1 text-sm" />
@@ -84,7 +84,7 @@ export default function BookingMentoring() {
                         </select>
                     </div>
 
-                   
+
                     {bookings.map((b, i) => (
                         <BookingCard onClick={goToDetailBooking} key={i} booking={b} />
                     ))}

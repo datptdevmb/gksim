@@ -1,40 +1,40 @@
-import AppHeader from "@/components/Header/Header"
 import RoleCard from "@/components/Card/RoleCard";
 import useAppNavigation from "@/hooks/useNavigation";
 import images from "@/assets/images";
-import Container from "@/components/Container/Container";
+import { Page, Button } from "zmp-ui";
 
 export default function SelectRolePage() {
     const { goBack, goToMentee, goToMentor } = useAppNavigation();
 
     return (
-        <Container >
-
-            <div className="text-white font-semibold text-lg text-center mt-6 mb-4">
-                Bạn muốn trở thành<br />Mentee hay Mentor?
+        <Page className="bg-gradient-to-b from-[#2B3990] to-[#3A8DDF] min-h-screen flex flex-col  items-center">
+            <div className="text-white font-semibold text-2xl text-center mt-8 mb-6 drop-shadow">
+                Bạn Muốn Trở Thành<br />Mentee Hay Mentor?
             </div>
 
-            <RoleCard
-                onClick={goToMentee}
-                title="Mentee"
-                description="Cựu sinh viên, Sinh viên có khát vọng phát triển bản thân, xây dựng sự nghiệp, tạo giá trị cho cộng đồng"
-                image={images.mentee}
-            />
+            <div className="w-[90%] max-w-md">
+                <RoleCard
+                    onClick={goToMentee}
+                    title="Mentee"
+                    description="Cựu sinh viên, Sinh viên có khát vọng phát triển bản thân, xây dựng sự nghiệp, tạo giá trị cho cộng đồng"
+                    image={images.mentee}
+                />
 
-            <RoleCard
-                onClick={goToMentor}
-                title="Mentor"
-                description="Anh/chị cựu sinh viên có kinh nghiệm và quản trị, điều hành doanh nghiệp"
-                image={images.mentor}
-            />
-
-            <div className="flex justify-center mt-4">
-                <button onClick={goBack} className="bg-white text-blue-600 rounded-full p-3 shadow">
-                    ⬅️ Quay lại
-                </button>
+                <RoleCard
+                    onClick={goToMentor}
+                    title="Mentor"
+                    description="Anh/chị cựu sinh viên có kinh nghiệm về quản trị & điều hành doanh nghiệp"
+                    image={images.mentor}
+                />
             </div>
 
-        </Container>
-
+            <Button
+                variant="secondary"
+                className="mt-8 rounded-full px-8 py-3 text-base font-semibold"
+                onClick={goBack}
+            >
+                Quay lại
+            </Button>
+        </Page>
     );
 }

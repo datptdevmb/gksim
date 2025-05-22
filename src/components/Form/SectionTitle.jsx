@@ -1,7 +1,7 @@
-export default function SectionTitle({ title }) {
-    return (
-        <div className="text-white font-semibold text-sm mt-6 mb-2 border-b border-white/30 pb-1">
-            {title}
-        </div>
-    );
-}
+const SectionTitle = ({ title }) => (
+    <h3 className="text-white text-sm font-semibold mb-3 mt-6 border-b border-white/30 pb-1">
+        {title}
+    </h3>
+);
+
+export default SectionTitle;

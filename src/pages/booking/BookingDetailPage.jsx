@@ -1,7 +1,8 @@
-import Header from "@/components/Header/Header";
+import Header from "@/components/MainHeader/MainHeader";
 import ButtonApp from "@/components/Button/ButtonApp";
 
 export default function BookingDetail() {
+
     const booking = {
         code: "#Abcd35qj",
         name: "Tên khách hàng A",

@@ -1,5 +1,4 @@
 import Container from "@/components/Container/Container";
-import HeaderApp from "@/components/Header/Header";
 import NotificationItem from "@/components/Notice/NoticeItem";
 
 export default function NotificationPage() {
