@@ -4,7 +4,7 @@ export const ROUTES = {
     DETAIL: "/detail",
     REGIS: "/Regis",
     NEWS_POST: "/newsPost",
-    NEWS_DETAIL: "/news-detail",
+    NEWS_DETAIL: (id) => `/news-detail/${id}`,
     MENTEE: "/mentee",
     MENTOR: "/mentor",
     CONFIRM: "/booking-confirm",

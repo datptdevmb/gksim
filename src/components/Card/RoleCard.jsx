@@ -1,4 +1,6 @@
-export default function RoleCard({ title, description, image, onClick }) {
+import { memo } from "react";
+
+function RoleCard({ title, description, image, onClick }) {
     return (
         <div
             onClick={onClick}
@@ -10,3 +12,5 @@ export default function RoleCard({ title, description, image, onClick }) {
         </div>
     );
 }
+
+export default memo(RoleCard)

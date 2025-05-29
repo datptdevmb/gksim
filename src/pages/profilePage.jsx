@@ -3,10 +3,22 @@ import ButtonApp from "@/components/Button/ButtonApp";
 import Container from "@/components/Container/Container";
 import Header from "@/components/Header/Header";
 import useAppNavigation from "@/hooks/useNavigation";
-import { Icon } from "zmp-ui"; // hoặc dùng react-icons nếu zmp-ui lỗi
+import { getUserInfor } from "@/services/auth";
+import { useEffect, useState } from "react";
+import { Icon } from "zmp-ui";
 
 export default function ProfilePage() {
     const { goToEditProfile, goToMbtiTest } = useAppNavigation();
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+        const userId = localStorage.getItem("user_id");
+
+        getUserInfor(userId)
+            .then((data) => setUser(data))
+            .catch(() => setUser([]));
+
+    }, []);
 
     return (
         <Container>
@@ -18,11 +30,11 @@ export default function ProfilePage() {
                 >
                     <div className="flex items-center gap-3">
                         <img
-                            src="https://i.pravatar.cc/100"
+                            src={user?.avatar || images.avatar}
                             alt="avatar"
                             className="w-12 h-12 rounded-full object-cover"
                         />
-                        <span className="text-sm font-medium">Mentor Nguyễn Văn A</span>
+                        <span className="text-sm font-medium">{user?.name}</span>
                     </div>
 
                     <div className="w-6 h-6 flex items-center justify-center text-blue-600">
@@ -48,7 +60,6 @@ export default function ProfilePage() {
                         title="Thực hiện bài test"
                         size="sm"
                         gradient
-
                         onClick={goToMbtiTest}
                     />
                 </div>

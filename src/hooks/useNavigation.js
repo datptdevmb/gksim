@@ -10,7 +10,7 @@ export default function useAppNavigation() {
         goToDetail: () => navigate(ROUTES.DETAIL),
         goToRegis: () => navigate(ROUTES.REGIS),
         goToNewsPost: () => navigate(ROUTES.NEWS_POST),
-        goToNewsDetailPage: () => navigate(ROUTES.NEWS_DETAIL),
+        goToNewsDetailPage: (id) => navigate(ROUTES.NEWS_DETAIL(id)),
         goToMentee: () => navigate(ROUTES.MENTEE),
         goToMentor: () => navigate(ROUTES.MENTOR),
         goToConfirm: () => navigate(ROUTES.CONFIRM),

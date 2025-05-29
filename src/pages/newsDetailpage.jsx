@@ -1,40 +1,51 @@
-import AppHeader from "@/components/Header/Header";
+
 import NewsDetailContent from "@/components/News/NewsDetailContent";
 import ButtonApp from "@/components/Button/ButtonApp";
 import images from "@/assets/images";
-import Container from "@/components/Container/Container";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getBlogById } from "@/services/News";
 
 export default function NewsDetailPage() {
-    const content = `
-📱 Giới thiệu sản phẩm...
-🔥 AI tích hợp thông minh...
-✅ Sạc nhanh 65W - 🔋 Đạt 70% pin chỉ trong 20 phút...
-🧠 Trải nghiệm camera sắc nét...
-📱 Giới thiệu sản phẩm...
-🔥 AI tích hợp thông minh...
-✅ Sạc nhanh 65W - 🔋 Đạt 70% pin chỉ trong 20 phút...
-🧠 Trải nghiệm camera sắc nét...📱 Giới thiệu sản phẩm...
-🔥 AI tích hợp thông minh...
-✅ Sạc nhanh 65W - 🔋 Đạt 70% pin chỉ trong 20 phút...
-🧠 Trải nghiệm camera sắc nét...📱 Giới thiệu sản phẩm...
-🔥 AI tích hợp thông minh...
-✅ Sạc nhanh 65W - 🔋 Đạt 70% pin chỉ trong 20 phút...
-🧠 Trải nghiệm camera sắc nét...
-  `;
+    const { id } = useParams();
+    const [news, setNews] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchDetail() {
+            try {
+                const data = await getBlogById(id);
+                if (data) setNews(data);
+            } catch (err) {
+                console.error("Lỗi khi lấy chi tiết bài viết:", err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        if (id) fetchDetail();
+    }, [id]);
 
     return (
-        <Container bg="light">
+        <div className="h-screen flex flex-col">
+            <div className="flex-1 overflow-y-auto bg-white">
+                {loading ? (
+                    <p className="text-center text-sm text-gray-400 p-4">Đang tải nội dung...</p>
+                ) : news ? (
+                    <NewsDetailContent
+                        image={news.image || images.post1}
+                        date={news.date}
+                        author={news.author}
+                        title={news.title}
+                        content={news.content}
+                    />
+                ) : (
+                    <p className="text-center text-sm text-red-500 p-4">Không tìm thấy bài viết.</p>
+                )}
+            </div>
 
-            <NewsDetailContent
-                image={images.post1}
-                date="05/03/2025"
-                author="longnguyen"
-                title="Hãng Công Nghệ X Ra Mắt Điện Thoại Mới Với Công Nghệ AI Tích Hợp"
-                content={content}
-            />
-
-            <ButtonApp size="lg" title="Chia sẻ" onClick={() => alert("Chia sẻ!")} />
-        </Container>
-
+            <div className="p-4 pb-20 w-full bg-white border-t">
+                <ButtonApp fullWidth size="lg" title="Chia sẻ" onClick={() => alert("Chia sẻ!")} />
+            </div>
+        </div>
     );
 }

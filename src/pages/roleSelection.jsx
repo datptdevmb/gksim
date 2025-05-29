@@ -8,7 +8,7 @@ export default function SelectRolePage() {
     const { goBack, goToMentee, goToMentor } = useAppNavigation();
 
     return (
-        <Container >
+        <Container className="h-[calc(100vh-88px)]" >
 
             <div className="text-white font-semibold text-lg text-center mt-6 mb-4">
                 Bạn muốn trở thành<br />Mentee hay Mentor?

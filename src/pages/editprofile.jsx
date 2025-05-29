@@ -2,14 +2,14 @@ import Header from "@/components/Header/Header";
 import FormInput from "@/components/Form/FormInput";
 import ButtonApp from "@/components/Button/ButtonApp";
 import { useState } from "react";
+import Container from "@/components/Container/Container";
 
 export default function EditProfilePage() {
     const [gender, setGender] = useState("");
     const [mbti, setMbti] = useState("");
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-[#1E1A85] to-[#3498db] text-white pb-20">
-            <Header title="Chỉnh sửa thông tin" />
+        <Container>
 
             <div className="flex justify-center mt-4">
                 <div className="relative">
@@ -29,7 +29,6 @@ export default function EditProfilePage() {
                     <FormInput label="Số điện thoại" placeholder="0933209346" required />
                     <FormInput label="Email" type="email" placeholder="nguyenvana@gmail.com" />
 
-                    {/* Dropdown giới tính */}
                     <div>
                         <label className="text-sm text-black font-medium mb-1 block">Giới tính</label>
                         <select
@@ -81,6 +80,7 @@ export default function EditProfilePage() {
                     onClick={() => alert("Lưu thông tin thành công")}
                 />
             </div>
-        </div>
+        </Container>
+
     );
 }

@@ -1,51 +1,80 @@
 import { useEffect, useState } from "react";
-import AppHeader from "@/components/Header/Header";
 import CallToActionCard from "@/components/Card/CallToActionCard";
 import PostCard from "@/components/Card/PostCard";
-
 import useAppNavigation from "@/hooks/useNavigation";
 import images from "@/assets/images";
-import getNews from "@/services/News";
 import Container from "@/components/Container/Container";
+import UserSession from "@/utils/session";
+import { handleAuthorize } from "@/utils/zaloAuth";
+import { loginZalo } from "@/services/auth";
+import { getNews } from "@/services/News";
 
 function HomePage() {
-  const {
-    goToRegis,
-    goToNewsPost,
-  } = useAppNavigation();
 
-  const [data, setData] = useState([])
+
+  const { goToRegis, goToNewsPost } = useAppNavigation();
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [accountStatus, setAccountStatus] = useState("none"); // [none , pending ,approved]
+  const [hasRegistered, setHasRegistered] = useState(false);
+
 
   useEffect(() => {
-    async function fetchData() {
-      const news = await getNews();
-      if (news) setData(news);
-      setLoading(false);
+    const { status, zaloId } = UserSession.getAll();
+
+    if (zaloId) {
+      //check zaloId 
+      setHasRegistered(true);
+      setAccountStatus(status || "none");
+      // login 
+      loginZalo(zaloId)
     }
-    fetchData();
+
   }, []);
 
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const userId = UserSession.get("user_id");
+        if (userId) {
+          const response = await getNews();
+          setData(response);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }
+    , []);
+
+
+  const handleClickRegis = () => handleAuthorize(goToRegis)
+  const handelClickNewsPost = () => goToNewsPost()
+
 
   return (
-
-    <Container className="h-[803px]">
+    <Container>
       <CallToActionCard
+        status={accountStatus || "none"}
         logo={images.logoSecond}
-        title="Trở thành thành viên BKASim - Mentoring"
-        buttonText="Đăng ký ngay"
-        onClick={goToRegis}
+        title="Trở thành thành viên"
+        subTitle=" BKASim - Mentoring"
+        buttonText={hasRegistered ? "Đã đăng ký" : "Đăng ký ngay"}
+        onClick={handleClickRegis}
       />
 
       <PostCard
         loading={loading}
-        image={data[0]?.avatar}
-        title={data[0]?.name}
-        onClick={goToNewsPost}
+        image={data?.avatar}
+        title={data?.name}
+        onClick={handelClickNewsPost}
       />
     </Container>
-
   );
 }
 

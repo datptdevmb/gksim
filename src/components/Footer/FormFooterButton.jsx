@@ -5,7 +5,7 @@ export default function FormFooterButton({
     onClick = () => { },
 }) {
     return (
-        <div className="relative bg-gradient-to-b from-[#1E1A85] to-[#3498db] px-4 py-6 flex items-center justify-between text-white">
+        <div className="absolute w-full bottom-0 bg-gradient-to-b from-[#1E1A85] to-[#3498db] px-4 py-6 flex items-center justify-between text-white">
             <ButtonApp
                 title={title}
                 variant="confirm"

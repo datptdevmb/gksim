@@ -39,18 +39,20 @@ const Layout = () => {
             </div>
 
             {/* Nội dung chính */}
-            <div className="flex-1 overflow-y-auto">
-              <Suspense fallback={<div className="text-center p-4">Đang tải...</div>}>
-                <AnimationRoutes >
+            <main className="flex-1 overflow-y-auto">
+              <Suspense fallback={
+                <div className="flex justify-center items-center h-full">Đang tải...</div>
+              }>
+                <AnimationRoutes>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/SearchPage" element={<SearchPage />} />
                   <Route path="/Noticate" element={<NotificationPage />} />
                   <Route path="/Setting" element={<ProfilePage />} />
                   <Route path="/newsPost" element={<NewsPage />} />
-                  <Route path="/Regis" element={<SelectRolePage />} />
+                  <Route path="/Regis" element={<Regis />} />
                   <Route path="/mentee" element={<MenteeFormPage />} />
                   <Route path="/mentor" element={<MentorFormPage />} />
-                  <Route path="/news-detail" element={<NewsDetailPage />} />
+                  <Route path="/news-detail/:id" element={<NewsDetailPage />} />
                   <Route path="/Booking" element={<BookingMentoring />} />
                   <Route path="/booking-detail" element={<BookingDetailPage />} />
                   <Route path="/booking-confirm" element={<BookingConfirmationPage />} />
@@ -58,7 +60,7 @@ const Layout = () => {
                   <Route path="/editprofile" element={<EditProfilePage />} />
                 </AnimationRoutes>
               </Suspense>
-            </div>
+            </main>
 
             <div >
               <BottomNav />

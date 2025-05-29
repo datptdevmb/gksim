@@ -5,12 +5,13 @@ export default function StepperItem({
     isActive = false,
     isLast = false,
     isDone = false,
+    icon,
     onClick = () => { },
 }) {
-    return <MarkerWithLine isActive={isActive} isDone={isDone} label={label} onClick={onClick} />;
+    return <MarkerWithLine isActive={isActive} icon={icon} isDone={isDone} label={label} onClick={onClick} />;
 }
 
-function MarkerWithLine({ isActive, isDone, label, onClick }) {
+function MarkerWithLine({ isActive, isDone, label, icon, onClick }) {
     return (
         <div className="flex flex-row cursor-pointer" onClick={onClick}>
             <div className="flex flex-col items-center">
@@ -40,7 +41,7 @@ function MarkerWithLine({ isActive, isDone, label, onClick }) {
                 </span>
 
                 <div className="mt-4">
-                    <FormInput placeholder={label} />
+                    <FormInput icon={icon} placeholder={label} />
                 </div>
 
             </div>

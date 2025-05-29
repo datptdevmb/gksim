@@ -16,13 +16,13 @@ export default function FormInput({
                 </label>
             )}
 
-            <div className="flex items-center w-full rounded px-3 py-2 bg-white border border-gray-300">
+            <div className="flex items-center w-full rounded px-3 py-1 bg-white border border-gray-300">
                 {icon && (
                     <Icon icon={icon} className="text-gray-400 text-base mr-2" />
                 )}
                 <input
                     type={type}
-                    className="flex-1 bg-transparent text-sm text-black placeholder-gray-400 focus:outline-none"
+                    className="flex-1 bg-transparent py-2 text-sm text-black placeholder-gray-400 focus:outline-none"
                     placeholder={placeholder}
                     autoComplete="off"
                     {...rest}

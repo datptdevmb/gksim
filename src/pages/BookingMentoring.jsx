@@ -14,6 +14,7 @@ export default function BookingMentoring() {
     const [currentStep, setCurrentStep] = useState(0);
     const [activeTab, setActiveTab] = useState("Lịch hẹn mới");
     const [isCompleted, setIsCompleted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState({
         subject: "",
         time: "",
@@ -28,107 +29,107 @@ export default function BookingMentoring() {
     ];
 
     const steps = [
-        { label: "Nhập chủ đề" },
-        { label: "Nhập thời gian" },
-        { label: "Xác nhận thông tin" },
+        { label: "1.Nhập chủ đề", icon: "zi-edit" },
+        { label: "2.Nhập thời gian", icon: "zi-edit" },
+        { label: "3.Xác nhận thông tin", icon: "zi-clock-1-solid" },
+        { label: "4.Xác nhận thông tin", icon: "zi-edit" }, 
     ];
 
     const handleComplete = () => {
-        if (!formData.subject.trim() || !formData.time.trim() || !formData.confirmNote.trim()) {
-            alert("Vui lòng điền đầy đủ thông tin.");
-            return;
-        }
+
+        setIsLoading(true)
         setIsCompleted(true);
         setCurrentStep(steps.length);
-
-
     };
 
-    const handleChangeStep =()=>{
-        console.log('hhhjj')
-    }
-
     return (
-        <Container bg="light">
-            <div className="flex border-b px-4 pt-4">
+
+        <div>
+            <div className="flex border-b pt-4">
                 {tabs.map(tab => (
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`text-sm font-medium px-4 pb-2 ${activeTab === tab ? "border-b-2 border-blue-600 text-blue-600" : "text-gray-400"}`}
+                        className={`flex-1 text-sm font-medium px-4 pb-2 text-center ${activeTab === tab ? "border-b-2 border-[#3993D9] text-blue-600" : "border-b-2 bg-light text-gray-400"}`}
                     >
                         {tab}
                     </button>
                 ))}
             </div>
+            <Container bg="light">
 
-            {activeTab === "Lịch hẹn mới" ? (
-                <div className="pt-5 px-4">
-                    {steps.map((step, index) => (
-                        <StepperItem
-                            key={index}
-                            label={step.label}
-                            isActive={!isCompleted && index === currentStep}
-                            isDone={isCompleted || index < currentStep}
-                            disabled={isCompleted}
-                            onClick={() => setCurrentStep(index)}
-                        />
-                    ))}
+                {activeTab === "Lịch hẹn mới" ? (
+                    <div className="pt-5 px-4">
+                        {steps.map((step, index) => (
+                            <StepperItem
+                                key={index}
+                                icon={step.icon}
+                                label={step.label}
+                                isActive={!isCompleted && index === currentStep}
+                                isDone={isCompleted || index < currentStep}
+                                disabled={isCompleted}
+                                onClick={() => setCurrentStep(index)}
+                            />
+                        ))}
 
-                    <div className="flex  flex-row ">
+                        <div className="flex  flex-row ">
 
-                        <div className="relative flex flex-col items-start ml-[8px]">
-                            {
-                                !isCompleted ? (<div> <div className="w-[2px] h-[70px] bg-gray-300"></div>
-                                    <div className="w-8 h-[2px] bg-gray-300 ml-[2px]"></div></div>) :
-                                    (<div>
-                                        <div className="w-[2px] h-[70px] bg-[#3993D9]"></div>
-                                        <div className="w-8 h-[2px] bg-[#3993D9]"></div>
-                                    </div>)
-                            }
+                            <div className="relative flex flex-col items-start ml-[8px]">
+                                {
+                                    !isCompleted ? (<div> <div className="w-[2px] h-[70px] bg-gray-300"></div>
+                                        <div className="w-8 h-[2px] bg-gray-300 ml-[2px]"></div></div>) :
+                                        (<div>
+                                            <div className="w-[2px] h-[70px] bg-[#3993D9]"></div>
+                                            <div className="w-8 h-[2px] bg-[#3993D9]"></div>
+                                        </div>)
+                                }
 
-                        </div>
-
-                        <div className="flex flex-col">
-                            <p className="text-xs text-gray-500 leading-relaxed mb-5">
-                                Quý khách sẽ nhận được thông báo Zalo thông tin đặt lịch, nhân viên sẽ liên lạc lại Quý khách qua SĐT nếu thông tin đặt lịch có sự thay đổi
-                            </p>
-                            <div className="">
-                                <ButtonApp
-                                    title="Chốt Đặt lịch"
-                                    fullWidth
-                                    rounded
-                                    gradient
-                                    size="md"
-                                    onClick={handleComplete}
-                                />
                             </div>
+
+                            <div className="flex flex-col">
+                                <p className="text-xs text-gray-500 leading-relaxed mb-5">
+                                    Quý khách sẽ nhận được thông báo Zalo thông tin đặt lịch, nhân viên sẽ liên lạc lại Quý khách qua SĐT nếu thông tin đặt lịch có sự thay đổi
+                                </p>
+                                <div className="">
+                                    <ButtonApp
+                                        title="Chốt Đặt lịch"
+                                        fullWidth
+                                        rounded
+                                        loading={isLoading}
+                                        disabled={isLoading}
+                                        gradient
+                                        size="md"
+                                        onClick={handleComplete}
+                                    />
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
-
-                </div>
-            ) : (
-                <div className="px-4 pt-4 space-y-4">
-                    <div className="space-y-2">
-                        <div className="flex gap-2">
-                            <input type="date" className="w-full border border-gray-300 rounded px-2 py-1 text-sm" />
-                            <input type="date" className="w-full border border-gray-300 rounded px-2 py-1 text-sm" />
+                ) : (
+                    <div className="px-4 pt-4 space-y-4">
+                        <div className="space-y-2">
+                            <div className="flex gap-2">
+                                <input type="date" className="w-full border border-gray-300 rounded px-2 py-1 text-sm" />
+                                <input type="date" className="w-full border border-gray-300 rounded px-2 py-1 text-sm" />
+                            </div>
+                            <select className="w-full border border-gray-300 rounded px-2 py-1 text-sm">
+                                <option>Theo trạng thái</option>
+                                <option>Chờ xác nhận</option>
+                                <option>Đã xác nhận</option>
+                                <option>Hoàn thành</option>
+                                <option>Đã huỷ</option>
+                            </select>
                         </div>
-                        <select className="w-full border border-gray-300 rounded px-2 py-1 text-sm">
-                            <option>Theo trạng thái</option>
-                            <option>Chờ xác nhận</option>
-                            <option>Đã xác nhận</option>
-                            <option>Hoàn thành</option>
-                            <option>Đã huỷ</option>
-                        </select>
-                    </div>
 
-                    {bookings.map((b, i) => (
-                        <BookingCard onClick={goToDetailBooking} key={i} booking={b} />
-                    ))}
-                </div>
-            )}
-        </Container>
+                        {bookings.map((b, i) => (
+                            <BookingCard onClick={goToDetailBooking} key={i} booking={b} />
+                        ))}
+                    </div>
+                )}
+            </Container>
+        </div>
+
     );
 }
