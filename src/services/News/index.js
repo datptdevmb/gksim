@@ -30,6 +30,7 @@ export const getNewsByCategory = async (categoryId, search = "") => {
                 search: search || undefined,
             },
         });
+        console.log("Kết quả gọi API getNewsByCategory:", res.data);
         return res.data;
     } catch (error) {
         console.error("Lỗi getNewsByCategory:", error);

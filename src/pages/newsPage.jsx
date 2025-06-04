@@ -71,7 +71,7 @@ export default function NewsPage() {
                     </button>
 
                     {/* Các danh mục từ API */}
-                    {categories.map((cat) => (
+                    {categories && categories.map((cat) => (
                         <button
                             key={cat.id}
                             onClick={() => setActiveCategory(cat.id)}

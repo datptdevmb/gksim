@@ -11,9 +11,9 @@ function PostCard({ image, title, onClick, loading }) {
     }
 
     return (
-        <div className="bg-white rounded-lg h-[300px] shadow overflow-hidden cursor-pointer" onClick={onClick}>
+        <div className="bg-white rounded-lg  shadow overflow-hidden cursor-pointer" onClick={onClick}>
             <img src={image} alt="post" className="w-full h-[250px] object-cover" />
-            <div className="p-2 text-sm font-semibold">{title}</div>
+            <span className="pt-4 p-2 text-sm font-semibold">{title}</span>
         </div>
     );
 }

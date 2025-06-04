@@ -23,7 +23,7 @@ export default function RegisPage() {
         company: "",
         position: "",
         roles: [],
-        zaloId: "434723783325452"
+        zaloId: "434722783325452"
     });
     const [errors, setErrors] = useState({});
 
@@ -60,7 +60,7 @@ export default function RegisPage() {
                 console.log("Zalo ID:", zaloId);
                 setFormData((prev) => ({
                     ...prev,
-                    zaloId: zaloId || "434723783325452"
+                    zaloId: zaloId || "434722783325452"
                 }));
             },
             fail: (err) => {

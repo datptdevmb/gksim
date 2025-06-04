@@ -23,10 +23,8 @@ function HomePage() {
     const { status, zaloId } = UserSession.getAll();
 
     if (zaloId) {
-      //check zaloId 
       setHasRegistered(true);
-      setAccountStatus(status || "none");
-      // login 
+      setAccountStatus(status || "none"); 
       loginZalo(zaloId)
     }
 
@@ -37,11 +35,10 @@ function HomePage() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const userId = UserSession.get("user_id");
-        if (userId) {
-          const response = await getNews();
-          setData(response);
-        }
+
+        const response = await getNews();
+        setData(response);
+
       } catch (error) {
         console.error("Error fetching user data:", error);
       } finally {
@@ -70,8 +67,8 @@ function HomePage() {
 
       <PostCard
         loading={loading}
-        image={data?.avatar}
-        title={data?.name}
+        image={data?.image || images.post1}
+        title={data?.title || "Tin tức mới nhất"}
         onClick={handelClickNewsPost}
       />
     </Container>
