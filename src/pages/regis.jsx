@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { authorize, getUserInfo, getUserID, getPhoneNumber } from "zmp-sdk/apis";
-import { regisZl } from "@/services/auth";
+import { loginZalo, regisZl } from "@/services/auth";
 import {
     FiUser,
     FiPhone,
@@ -23,7 +23,7 @@ export default function RegisPage() {
         company: "",
         position: "",
         roles: [],
-        zaloId: "434722783325452"
+        zaloId: "434722783453322"
     });
     const [errors, setErrors] = useState({});
 
@@ -60,7 +60,7 @@ export default function RegisPage() {
                 console.log("Zalo ID:", zaloId);
                 setFormData((prev) => ({
                     ...prev,
-                    zaloId: zaloId || "434722783325452"
+                    zaloId: zaloId || "434722783453322"
                 }));
             },
             fail: (err) => {
@@ -89,7 +89,6 @@ export default function RegisPage() {
             setStep(3);
         } catch (err) {
             console.log("Lỗi khi đăng ký:", err);
-
             throw err;
         }
     };

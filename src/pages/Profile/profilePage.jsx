@@ -11,6 +11,8 @@ export default function ProfilePage() {
     const { goToEditProfile, goToMbtiTest } = useAppNavigation();
     const [user, setUser] = useState([]);
 
+    
+
     useEffect(() => {
         const userId = localStorage.getItem("user_id");
 

@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import CallToActionCard from "@/components/Card/CallToActionCard";
 import PostCard from "@/components/Card/PostCard";
@@ -11,65 +12,48 @@ import { getNews } from "@/services/News";
 
 function HomePage() {
 
-
   const { goToRegis, goToNewsPost } = useAppNavigation();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [accountStatus, setAccountStatus] = useState("none"); // [none , pending ,approved]
+  const [accountStatus, setAccountStatus] = useState("none");
   const [hasRegistered, setHasRegistered] = useState(false);
 
+  const {
+    data: news,
+    isLoading,
+  } = useQuery({
+    queryKey: ["news"],
+    queryFn: getNews,
+    staleTime: 5 * 60 * 1000,
+  });
+  
 
   useEffect(() => {
     const { status, zaloId } = UserSession.getAll();
-
     if (zaloId) {
       setHasRegistered(true);
-      setAccountStatus(status || "none"); 
-      loginZalo(zaloId)
+      setAccountStatus(status || "none");
+      loginZalo(zaloId);
     }
-
   }, []);
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-
-        const response = await getNews();
-        setData(response);
-
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }
-    , []);
-
-
-  const handleClickRegis = () => handleAuthorize(goToRegis)
-  const handelClickNewsPost = () => goToNewsPost()
-
+  const handleClickRegis = () => handleAuthorize(goToRegis);
+  const handleClickNewsPost = () => goToNewsPost();
 
   return (
     <Container>
       <CallToActionCard
-        status={accountStatus || "none"}
+        status={accountStatus}
         logo={images.logoSecond}
         title="Trở thành thành viên"
-        subTitle=" BKASim - Mentoring"
+        subTitle="BKASim - Mentoring"
         buttonText={hasRegistered ? "Đã đăng ký" : "Đăng ký ngay"}
         onClick={handleClickRegis}
       />
 
       <PostCard
-        loading={loading}
-        image={data?.image || images.post1}
-        title={data?.title || "Tin tức mới nhất"}
-        onClick={handelClickNewsPost}
+        loading={isLoading}
+        image={news?.image || images.post1}
+        title={news?.title || "Tin tức mới nhất"}
+        onClick={handleClickNewsPost}
       />
     </Container>
   );

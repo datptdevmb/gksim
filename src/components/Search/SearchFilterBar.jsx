@@ -1,10 +1,12 @@
-export default function SearchFilterBar({ onSearch, onFilterChange }) {
+import { memo } from "react";
+
+function SearchFilterBar({ onSearch, onFilterChange }) {
     return (
         <div className="px-4 py-2 bg-white flex flex-col gap-2">
             <input
                 type="text"
                 placeholder="Tìm kiếm"
-                className="border px-3 py-2 rounded-md text-sm"
+                className="border px-3 py-2 text-black rounded-md text-sm"
                 onChange={(e) => onSearch(e.target.value)}
             />
             <select
@@ -18,3 +20,5 @@ export default function SearchFilterBar({ onSearch, onFilterChange }) {
         </div>
     );
 }
+
+export default memo(SearchFilterBar);

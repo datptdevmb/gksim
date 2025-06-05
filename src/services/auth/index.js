@@ -24,27 +24,36 @@ export async function getUserInfor(userId) {
 }
 
 
-export async function fetchUsers(role, search) {
+
+export async function fetchUsers(role = "", name = "") {
     try {
-        const res = await axios.get(apiUrl.getUsers, {
+        const token = localStorage.getItem("access_token");
+        const response = await axios.get("https://bkasim.duckdns.org/users", {
             params: {
-                role: role === "all" ? undefined : role,
-                search: search || undefined,
+                role: role !== "all" ? role : undefined,
+                name: name || undefined,
+            },
+            headers: {
+                accept: "*/*",
+                Authorization: `Bearer ${token}`,
             },
         });
-        return res.data;
+        console.log("Kết quả gọi API fetchUsers:", response.data);
+        return response.data.data || [];
     } catch (error) {
-        console.error("Lỗi gọi API fetchUsers:", error);
+        console.error("Lỗi khi lấy danh sách người dùng:", error);
         return [];
     }
 }
+
+
 
 export async function regisZl(data) {
     try {
         const res = await axios.post(apiUrl.regisZl, data);
         console.log("Kết quả đăng ký Zalo:", res.data);
 
-        // Chỉ lưu zaloId nếu message là \"Đăng ký thành công\"
+
         if (res.data.message === "Đăng ký thành công, vui lòng chờ admin duyệt!" && data.zaloId) {
             localStorage.setItem("zaloId", data.zaloId);
         }
@@ -81,6 +90,34 @@ export async function loginZalo(zaloId) {
         throw error;
     }
 }
+
+
+
+export async function refreshAccessToken() {
+    const refreshToken = localStorage.getItem("refresh_token");
+    const response = await axios.post(`${apiUrl}/auth/refresh`, {
+        refresh_token: refreshToken,
+    });
+    return response.data.access_token;
+}
+
+
+export async function fetchUserById(userId) {
+    try {
+        const response = await axiosInstance.get(`${apiUrl.getUserInf.replace(":id", userId)}`);
+        return response.data;
+    } catch (error) {
+        console.error("Lỗi khi lấy thông tin người dùng:", error);
+        return null;
+    }
+}
+
+
+export const updateUserInfo = async (userId, userData) => {
+    const url = apiUrl.updateUser.replace(":id", userId);
+    const response = await axios.put(url, userData);
+    return response.data;
+};
 
 
 
