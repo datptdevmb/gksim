@@ -1,4 +1,4 @@
-
+import ui from "@/config/uiConfig";
 
 export const base = "inline-flex items-center justify-center font-medium transition focus:outline-none";
 
@@ -9,7 +9,7 @@ export const sizeClasses = {
 };
 
 export const variantClasses = {
-    primary: "bg-primary text-white hover:bg-blue-700",
+    primary: ` ${ui.colors.primary} text-${ui.colors.textOnPrimary} hover:bg-blue-700`,
     secondary: "bg-[#919191] text-white hover:bg-gray-200",
     outline: "border border-blue-500 text-blue-500 bg-white hover:bg-blue-50",
     ghost: "text-blue-500 hover:bg-blue-50",

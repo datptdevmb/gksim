@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import StepperItem from "@/components/Form/StepperItem";
 import ButtonApp from "@/components/Button/ButtonApp";
-import BookingCard from "@/components/Card/BookingCard";
+import BookingCard from "@/components/Card/Booking/BookingCard";
 import Container from "@/components/Container/Container";
 import useAppNavigation from "@/hooks/useNavigation";
 import { getBookingHistory } from "@/services/booking";
+import TabSwitcher from "@/components/Tab/TabBar";
 
 const tabs = ["Lịch hẹn mới", "Lịch sử"];
 const today = new Date().toISOString().split("T")[0];
@@ -16,6 +17,10 @@ export default function BookingMentoring() {
     const [isCompleted, setIsCompleted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [historyBookings, setHistoryBookings] = useState([]);
+
+
+
+
 
     const [historyParams, setHistoryParams] = useState({
         fromDate: today,
@@ -51,6 +56,7 @@ export default function BookingMentoring() {
 
     useEffect(() => {
         if (activeTab === "Lịch sử") {
+            s
             fetchHistory();
         }
     }, [activeTab, fetchHistory]);
@@ -63,21 +69,11 @@ export default function BookingMentoring() {
 
     return (
         <div>
-            {/* Tabs */}
-            <div className="flex border-b pt-4">
-                {tabs.map((tab) => (
-                    <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        className={`flex-1 text-sm font-medium px-4 pb-2 text-center ${activeTab === tab
-                                ? "border-b-2 border-[#3993D9] text-blue-600"
-                                : "border-b-2 bg-light text-gray-400"
-                            }`}
-                    >
-                        {tab}
-                    </button>
-                ))}
-            </div>
+            <TabSwitcher
+                tabs={tabs}
+                activeTab={activeTab}
+                onChange={setActiveTab}
+            />
 
             <Container bg="light">
                 {activeTab === "Lịch hẹn mới" ? (

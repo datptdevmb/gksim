@@ -25,19 +25,24 @@ export async function getUserInfor(userId) {
 
 
 
-export async function fetchUsers(role = "", name = "") {
+export async function fetchUsers(role = "", name = "", userId = null) {
     try {
         const token = localStorage.getItem("access_token");
+
+        const params = {};
+
+        if (role && role !== "all") params.role = role;
+        if (name) params.name = name;
+        if (role === "followed" && userId) params.userId = userId;
+
         const response = await axios.get("https://bkasim.duckdns.org/users", {
-            params: {
-                role: role !== "all" ? role : undefined,
-                name: name || undefined,
-            },
+            params,
             headers: {
                 accept: "*/*",
                 Authorization: `Bearer ${token}`,
             },
         });
+
         console.log("Kết quả gọi API fetchUsers:", response.data);
         return response.data.data || [];
     } catch (error) {
@@ -45,6 +50,7 @@ export async function fetchUsers(role = "", name = "") {
         return [];
     }
 }
+
 
 
 
@@ -112,6 +118,25 @@ export async function fetchUserById(userId) {
     }
 }
 
+export async function followUser(userId) {
+    const token = localStorage.getItem("access_token");
+
+    try {
+        const response = await axios.post(
+            `https://bkasim.duckdns.org/follows/${userId}`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Lỗi khi follow người dùng:", error);
+        throw error;
+    }
+}
 
 export const updateUserInfo = async (userId, userData) => {
     const url = apiUrl.updateUser.replace(":id", userId);

@@ -20,6 +20,7 @@ const HIDDEN_PATHS = [
     "/mentor",
     "/booking-detail",
     "/booking-confirm",
+   
 ];
 
 const isLoggedIn = () => {

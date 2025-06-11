@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import CallToActionCard from "@/components/Card/CallToActionCard";
-import PostCard from "@/components/Card/PostCard";
+import { CallToActionCard } from "@/components/Card";
+import PostCard from "@/components/Card/Blog/BlogCard";
 import useAppNavigation from "@/hooks/useNavigation";
 import images from "@/assets/images";
 import Container from "@/components/Container/Container";
@@ -51,8 +51,8 @@ function HomePage() {
 
       <PostCard
         loading={isLoading}
-        image={news?.image || images.post1}
-        title={news?.title || "Tin tức mới nhất"}
+        image={news?.image}
+        title={news?.title }
         onClick={handleClickNewsPost}
       />
     </Container>

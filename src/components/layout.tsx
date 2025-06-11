@@ -9,7 +9,7 @@ import {
 import { getSystemInfo } from "zmp-sdk";
 import { AppProps } from "zmp-ui/app";
 
-import Header from "./Header/Header";
+import Header from "./Header/AppHeader";
 import BottomNav from "./bottomNavigation";
 import NotificationPage from "@/pages/Notice/noticate";
 import HomePage from "@/pages/Home";
@@ -24,8 +24,8 @@ import {
 // ✅ Tạo query client một lần
 const queryClient = new QueryClient();
 
-const NewsPage = lazy(() => import("@/pages/newsPage"));
-const SelectRolePage = lazy(() => import("@/pages/roleSelection"));
+import  BlogPage from '../pages/Blog/BlogPage'
+// const SelectRolePage = lazy(() => import("@/pages/roleSelection"));
 const MenteeFormPage = lazy(() => import("@/pages/MenteeFormPage"));
 const MentorFormPage = lazy(() => import("@/pages/MentorFormPage"));
 const NewsDetailPage = lazy(() => import("@/pages/Blog/newsDetailpage"));
@@ -56,7 +56,7 @@ const Layout = () => {
                     <Route path="/SearchPage" element={<SearchPage />} />
                     <Route path="/Noticate" element={<NotificationPage />} />
                     <Route path="/Setting" element={<ProfilePage />} />
-                    <Route path="/newsPost" element={<NewsPage />} />
+                    <Route path="/newsPost" element={<BlogPage />} />
                     <Route path="/Regis" element={<Regis />} />
                     <Route path="/mentee" element={<MenteeFormPage />} />
                     <Route path="/mentor" element={<MentorFormPage />} />

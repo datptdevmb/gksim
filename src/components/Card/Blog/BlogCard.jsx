@@ -1,4 +1,4 @@
-function PostCard({ image, title, onClick, loading }) {
+function BlogCard({ image, title, onClick, loading }) {
     if (loading) {
         return (
             <div className="bg-gray-200 h-[300px] animate-pulse rounded-lg overflow-hidden">
@@ -13,8 +13,8 @@ function PostCard({ image, title, onClick, loading }) {
     return (
         <div className="bg-white rounded-lg  shadow overflow-hidden cursor-pointer" onClick={onClick}>
             <img src={image} alt="post" className="w-full h-[250px] object-cover" />
-            <span className="pt-4 p-2 text-sm font-semibold">{title}</span>
+            <span className="pt-4 p-2 py-4 text-sm text-black font-semibold">{title}</span>
         </div>
     );
 }
-export default PostCard;
+export default BlogCard;

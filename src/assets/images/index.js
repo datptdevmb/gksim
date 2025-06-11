@@ -5,9 +5,11 @@ import mentee from './mentee.png';
 import mentor from './mentor.png';
 import imagepf from './imagepf.png'
 import back from './back.png'
+import userAvataDefault from './userDefault.jpg';
 
 export default {
     logo,
+    userAvataDefault,
     logoSecond,
     post1,
     back,

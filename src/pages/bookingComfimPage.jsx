@@ -1,6 +1,6 @@
 import { Page, Text, Button } from "zmp-ui";
 import img3 from '../static/3.png'
-import Header from "@/components/Header/Header";
+import Header from "@/components/Header/AppHeader";
 import ButtonApp from "@/components/Button/ButtonApp";
 import useAppNavigation from "@/hooks/useNavigation";
 import Container from "@/components/Container/Container";

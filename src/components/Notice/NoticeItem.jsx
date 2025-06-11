@@ -1,6 +1,7 @@
+import { memo } from "react";
 import ButtonApp from "../Button/ButtonApp";
 
-export default function NotificationItem({ message, time, buttonText, onClick }) {
+function NotificationItem({ message, time, buttonText, onClick }) {
     return (
         <div className="bg-white rounded-md px-4 py-3 shadow mb-3">
             <div className="text-sm text-black font-medium mb-1 flex justify-between items-center">
@@ -16,3 +17,6 @@ export default function NotificationItem({ message, time, buttonText, onClick })
         </div>
     );
 }
+
+
+export default memo(NotificationItem);

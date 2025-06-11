@@ -32,7 +32,7 @@ export default function NewsDetailPage() {
                     <p className="text-center text-sm text-gray-400 p-4">Đang tải nội dung...</p>
                 ) : news ? (
                     <NewsDetailContent
-                        image={news.image || images.post1}
+                        image={news.image}
                         date={news.date}
                         author={news.author}
                         title={news.title}
