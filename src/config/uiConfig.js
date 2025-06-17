@@ -44,6 +44,5 @@ const uiConfig = {
 
 
 };
-// export const defaultGradient = 'bg-gradient-primary';
 
 export default uiConfig;

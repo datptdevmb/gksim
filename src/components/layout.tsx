@@ -24,7 +24,9 @@ import {
 // ✅ Tạo query client một lần
 const queryClient = new QueryClient();
 
-import  BlogPage from '../pages/Blog/BlogPage'
+import BlogPage from '../pages/Blog/BlogPage'
+import { NetworkStatusProvider, useNetworkStatus } from "@/context/NetworkStatusContext";
+import ConnectionLost from "./Shared/ConnectionLost";
 // const SelectRolePage = lazy(() => import("@/pages/roleSelection"));
 const MenteeFormPage = lazy(() => import("@/pages/MenteeFormPage"));
 const MentorFormPage = lazy(() => import("@/pages/MentorFormPage"));
@@ -51,21 +53,28 @@ const Layout = () => {
                 <Suspense fallback={
                   <div className="flex justify-center items-center h-full">Đang tải...</div>
                 }>
-                  <AnimationRoutes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/SearchPage" element={<SearchPage />} />
-                    <Route path="/Noticate" element={<NotificationPage />} />
-                    <Route path="/Setting" element={<ProfilePage />} />
-                    <Route path="/newsPost" element={<BlogPage />} />
-                    <Route path="/Regis" element={<Regis />} />
-                    <Route path="/mentee" element={<MenteeFormPage />} />
-                    <Route path="/mentor" element={<MentorFormPage />} />
-                    <Route path="/news-detail/:id" element={<NewsDetailPage />} />
-                    <Route path="/Booking" element={<BookingMentoring />} />
-                    <Route path="/booking-detail" element={<BookingDetailPage />} />
-                    <Route path="/booking-confirm" element={<BookingConfirmationPage />} />
-                    <Route path="/editprofile" element={<EditProfilePage />} />
-                  </AnimationRoutes>
+                  {/* <NetworkStatusProvider>
+                    <AnimationRoutes>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/SearchPage" element={<SearchPage />} />
+                      <Route path="/Noticate" element={<NotificationPage />} />
+                      <Route path="/Setting" element={<ProfilePage />} />
+                      <Route path="/newsPost" element={<BlogPage />} />
+                      <Route path="/Regis" element={<Regis />} />
+                      <Route path="/mentee" element={<MenteeFormPage />} />
+                      <Route path="/mentor" element={<MentorFormPage />} />
+                      <Route path="/news-detail/:id" element={<NewsDetailPage />} />
+                      <Route path="/Booking" element={<BookingMentoring />} />
+                      <Route path="/booking-detail" element={<BookingDetailPage />} />
+                      <Route path="/booking-confirm" element={<BookingConfirmationPage />} />
+                      <Route path="/editprofile" element={<EditProfilePage />} />
+                    </AnimationRoutes>
+                  </NetworkStatusProvider> */}
+                  <NetworkStatusProvider>
+                    <MainContent />
+                  </NetworkStatusProvider>
+
+
                 </Suspense>
               </main>
 
@@ -79,5 +88,46 @@ const Layout = () => {
     </QueryClientProvider>
   );
 };
+
+
+
+const MainContent = () => {
+  const { connectionError, setConnectionError } = useNetworkStatus();
+
+  return (
+    <main className="flex-1 overflow-y-auto">
+      {connectionError ? (
+        <ConnectionLost
+          variant={connectionError}
+          onRetry={() => {
+            setConnectionError(false);
+            window.location.reload();
+          }}
+        />
+      ) : (
+        <Suspense fallback={
+          <div className="flex justify-center items-center h-full">Đang tải...</div>
+        }>
+          <AnimationRoutes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/SearchPage" element={<SearchPage />} />
+            <Route path="/Noticate" element={<NotificationPage />} />
+            <Route path="/Setting" element={<ProfilePage />} />
+            <Route path="/newsPost" element={<BlogPage />} />
+            <Route path="/Regis" element={<Regis />} />
+            <Route path="/mentee" element={<MenteeFormPage />} />
+            <Route path="/mentor" element={<MentorFormPage />} />
+            <Route path="/news-detail/:id" element={<NewsDetailPage />} />
+            <Route path="/Booking" element={<BookingMentoring />} />
+            <Route path="/booking-detail" element={<BookingDetailPage />} />
+            <Route path="/booking-confirm" element={<BookingConfirmationPage />} />
+            <Route path="/editprofile" element={<EditProfilePage />} />
+          </AnimationRoutes>
+        </Suspense>
+      )}
+    </main>
+  );
+};
+
 
 export default Layout;

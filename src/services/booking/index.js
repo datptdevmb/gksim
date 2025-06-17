@@ -30,7 +30,7 @@ export async function getBookingHistory({ fromDate, toDate, status, page = 1, li
 export async function createBooking(data) {
     try {
         const token = localStorage.getItem("access_token");
-        const response = await axios.post("https://bkasim.duckdns.org/booking", data, {
+        const response = await axios.post("https://bkasim.duckdns.org/bookings", data, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

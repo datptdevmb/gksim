@@ -23,7 +23,7 @@ export const useGetUserById = (id) => {
             queryFn: () => {
                 return fetchUserById(id)
             },
-            enabled: !!id ,
+            enabled: !!id,
             staleTime: 1000 * 60 * 5,
             keepPreviousData: true,
 

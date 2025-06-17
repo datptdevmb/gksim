@@ -2,7 +2,7 @@
 import axios from "axios";
 import apiUrl from "@/assets/api";
 import UserSession from "@/utils/session";
-
+import instance from "@/utils/axiosIntance";
 export async function getUserInfor(userId) {
     try {
         const token = localStorage.getItem("access_token");
@@ -35,7 +35,7 @@ export async function fetchUsers(role = "", name = "", userId = null) {
         if (name) params.name = name;
         if (role === "followed" && userId) params.userId = userId;
 
-        const response = await axios.get("https://bkasim.duckdns.org/users", {
+        const response = await instance.get("https://bkasim.duckdns.org/users", {
             params,
             headers: {
                 accept: "*/*",
@@ -76,7 +76,7 @@ export async function loginZalo(zaloId) {
     if (!zaloId) throw new Error("Thiếu zaloId");
 
     try {
-        const res = await axios.post(apiUrl.loginZalo, { zaloId });
+        const res = await instance.post(apiUrl.loginZalo, { zaloId });
 
         const { access_token, userData } = res.data;
 

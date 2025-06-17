@@ -1,9 +1,10 @@
 import apiUrl from "@/assets/api"
+import instance from "@/utils/axiosIntance";
 import axios from "axios"
 
 export async function getNews() {
     try {
-        const news = await axios.get(apiUrl.getFeatured);
+        const news = await instance.get(apiUrl.getFeatured);
         console.log(news.data)
         return news.data
 

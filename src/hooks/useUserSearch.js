@@ -8,24 +8,41 @@ export default function useUserSearch() {
     const [searchTerm, setSearchTerm] = useState("");
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [connectionError, setConnectionError] = useState(false);
     const debounceTimeout = useRef(null);
     const userId = UserSession.getUserId();
 
     const loadUsers = async (role, name) => {
         setLoading(true);
-        const data = await fetchUsers(role, name, userId);
+        setConnectionError(false);
 
-        let filtered = data.map((user) => ({
-            ...user,
-            isFavorite: user.isFavorite ?? false,
-        }));
+        try {
+            const data = await fetchUsers(role, name, userId);
 
-        if (role === "followed") {
-            filtered = filtered.filter((user) => user.followStatus === true);
+            let filtered = data.map((user) => ({
+                ...user,
+                isFavorite: user.isFavorite ?? false,
+            }));
+
+            if (role === "followed") {
+                filtered = filtered.filter((user) => user.followStatus === true);
+            }
+
+            setUsers(filtered);
+        } catch (error) {
+            console.error("Lỗi kết nối backend:", error);
+
+
+            if (
+                !error?.response ||
+                error.message?.includes("Network") ||
+                error.code === "ECONNREFUSED"
+            ) {
+                setConnectionError(true);
+            }
+        } finally {
+            setLoading(false);
         }
-
-        setUsers(filtered);
-        setLoading(false);
     };
 
     useEffect(() => {
@@ -60,6 +77,7 @@ export default function useUserSearch() {
             console.error("Không thể follow:", error);
         }
     };
+
     return {
         activeTab,
         setActiveTab,
@@ -67,6 +85,8 @@ export default function useUserSearch() {
         handleSearch,
         users,
         loading,
+        connectionError, 
+        retry: () => loadUsers(activeTab, searchTerm),
         handleToggleFavorite,
     };
 }

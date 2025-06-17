@@ -1,13 +1,15 @@
 import axios from "axios";
 
-
+// ✅ Base URL
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 const instance = axios.create({
     baseURL: BASE_URL,
+    timeout: 10000,
 });
 
 const excludedPaths = ["/auth/login", "/auth/register", "/auth/refresh"];
+
 
 instance.interceptors.request.use((config) => {
     if (!excludedPaths.some((path) => config.url?.includes(path))) {
@@ -18,6 +20,11 @@ instance.interceptors.request.use((config) => {
     }
     return config;
 });
+
+
+export const globalNetworkStatus = {
+    setConnectionError: null,
+};
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -33,10 +40,12 @@ function processQueue(error, token) {
     failedQueue = [];
 }
 
+
 instance.interceptors.response.use(
     (res) => res,
     async (error) => {
         const originalRequest = error.config;
+
 
         if (
             error.response &&
@@ -68,7 +77,6 @@ instance.interceptors.response.use(
 
                 const newToken = response.data.access_token;
                 localStorage.setItem("access_token", newToken);
-
                 instance.defaults.headers.common.Authorization = `Bearer ${newToken}`;
                 processQueue(null, newToken);
 
@@ -84,6 +92,27 @@ instance.interceptors.response.use(
                 isRefreshing = false;
             }
         }
+
+
+        if (!error.response) {
+            if (error.message?.includes("timeout")) {
+                globalNetworkStatus.setConnectionError?.({
+                    type: "timeout",
+                    message: "Yêu cầu quá thời gian phản hồi.",
+                });
+            } else if (error.message?.includes("Network")) {
+                globalNetworkStatus.setConnectionError?.({
+                    type: "no-internet",
+                    message: "Không có kết nối Internet.",
+                });
+            } else {
+                globalNetworkStatus.setConnectionError?.({
+                    type: "server-unreachable",
+                    message: "Không thể kết nối đến máy chủ.",
+                });
+            }
+        }
+
         return Promise.reject(error);
     }
 );
